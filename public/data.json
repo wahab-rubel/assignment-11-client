@@ -1,0 +1,202 @@
+[
+ {
+   "id": "room1",
+   "name": "Luxury Suite",
+   "description": "A spacious and elegant suite with a beautiful view.",
+   "image": "https://i.ibb.co.com/gV6fjwh/6.jpg",
+   "price": 150,
+   "totalReviews": 120,
+   "rating": 4.5,
+   "location": "New York"
+ },
+ {
+   "id": "room2",
+   "name": "Deluxe Room",
+   "description": "A cozy room with modern amenities.",
+   "image": "https://i.ibb.co.com/vhrZGv9/1.jpg",
+   "price": 100,
+   "totalReviews": 85,
+   "rating": 4.2,
+   "location": "Los Angeles"
+ },
+ {
+   "id": "room3",
+   "name": "Economy Room",
+   "description": "Affordable room for budget-conscious travelers.",
+   "image": "https://i.ibb.co.com/MCVphQN/2.jpg",
+   "price": 60,
+   "totalReviews": 45,
+   "rating": 3.8,
+   "location": "Chicago"
+ },
+ {
+   "id": "room4",
+   "name": "Penthouse Suite",
+   "description": "A luxurious penthouse with panoramic city views.",
+   "image": "https://i.ibb.co.com/z8mp9b4/3.jpg",
+   "price": 300,
+   "totalReviews": 200,
+   "rating": 4.9,
+   "location": "Miami"
+ },
+ {
+   "id": "room5",
+   "name": "Beachfront Villa",
+   "description": "A villa located just steps away from the beach.",
+   "image": "https://i.ibb.co.com/7thZZv6/4.jpg",
+   "price": 250,
+   "totalReviews": 95,
+   "rating": 4.7,
+   "location": "Hawaii"
+ },
+ {
+   "id": "room6",
+   "name": "Mountain Retreat",
+   "description": "A peaceful retreat surrounded by nature and mountains.",
+   "image": "https://example.com/images/mountain-retreat.jpg",
+   "price": 180,
+   "totalReviews": 60,
+   "rating": 4.4,
+   "location": "Aspen"
+ },
+ {
+   "id": "room7",
+   "name": "City Loft",
+   "description": "A modern loft with stylish interiors and a city view.",
+   "image": "https://example.com/images/city-loft.jpg",
+   "price": 130,
+   "totalReviews": 110,
+   "rating": 4.3,
+   "location": "San Francisco"
+ },
+ {
+   "id": "room8",
+   "name": "Romantic Getaway Suite",
+   "description": "Perfect for couples, this suite offers intimate luxury.",
+   "image": "https://example.com/images/romantic-suite.jpg",
+   "price": 200,
+   "totalReviews": 150,
+   "rating": 4.8,
+   "location": "Paris"
+ },
+ {
+   "id": "room9",
+   "name": "Family Suite",
+   "description": "Spacious suite perfect for families with children.",
+   "image": "https://example.com/images/family-suite.jpg",
+   "price": 175,
+   "totalReviews": 90,
+   "rating": 4.6,
+   "location": "London"
+ },
+ {
+   "id": "room10",
+   "name": "Studio Apartment",
+   "description": "A compact, cozy apartment ideal for solo travelers.",
+   "image": "https://example.com/images/studio-apartment.jpg",
+   "price": 80,
+   "totalReviews": 50,
+   "rating": 4.1,
+   "location": "Berlin"
+ },
+ {
+   "id": "room11",
+   "name": "Executive Suite",
+   "description": "High-end suite with a large desk and office amenities.",
+   "image": "https://example.com/images/executive-suite.jpg",
+   "price": 220,
+   "totalReviews": 130,
+   "rating": 4.7,
+   "location": "Dubai"
+ },
+ {
+   "id": "room12",
+   "name": "Poolside Room",
+   "description": "Room with easy access to the hotel's pool.",
+   "image": "https://example.com/images/poolside-room.jpg",
+   "price": 110,
+   "totalReviews": 75,
+   "rating": 4.3,
+   "location": "Los Angeles"
+ },
+ {
+   "id": "room13",
+   "name": "Spa Suite",
+   "description": "Relax and unwind in this suite with a private spa.",
+   "image": "https://example.com/images/spa-suite.jpg",
+   "price": 280,
+   "totalReviews": 160,
+   "rating": 4.8,
+   "location": "Bali"
+ },
+ {
+   "id": "room14",
+   "name": "Budget Room",
+   "description": "Affordable room with all basic facilities.",
+   "image": "https://example.com/images/budget-room.jpg",
+   "price": 50,
+   "totalReviews": 30,
+   "rating": 3.5,
+   "location": "Seoul"
+ },
+ {
+   "id": "room15",
+   "name": "Skyline Room",
+   "description": "Room with stunning skyline views of the city.",
+   "image": "https://example.com/images/skyline-room.jpg",
+   "price": 200,
+   "totalReviews": 110,
+   "rating": 4.6,
+   "location": "Tokyo"
+ },
+ {
+   "id": "room16",
+   "name": "Luxury Penthouse",
+   "description": "Experience the height of luxury with incredible views.",
+   "image": "https://example.com/images/luxury-penthouse.jpg",
+   "price": 400,
+   "totalReviews": 250,
+   "rating": 5.0,
+   "location": "Las Vegas"
+ },
+ {
+   "id": "room17",
+   "name": "Garden View Room",
+   "description": "Room with a peaceful garden view and fresh air.",
+   "image": "https://example.com/images/garden-view-room.jpg",
+   "price": 120,
+   "totalReviews": 60,
+   "rating": 4.4,
+   "location": "Amsterdam"
+ },
+ {
+   "id": "room18",
+   "name": "Seafront Villa",
+   "description": "A luxurious villa right on the oceanfront.",
+   "image": "https://example.com/images/seafront-villa.jpg",
+   "price": 350,
+   "totalReviews": 180,
+   "rating": 4.9,
+   "location": "Sydney"
+ },
+ {
+   "id": "room19",
+   "name": "Garden Cottage",
+   "description": "Cozy cottage nestled in the lush garden surroundings.",
+   "image": "https://example.com/images/garden-cottage.jpg",
+   "price": 160,
+   "totalReviews": 70,
+   "rating": 4.3,
+   "location": "Vancouver"
+ },
+ {
+   "id": "room20",
+   "name": "Historical Suite",
+   "description": "Room with vintage decor and a touch of history.",
+   "image": "https://example.com/images/historical-suite.jpg",
+   "price": 230,
+   "totalReviews": 140,
+   "rating": 4.5,
+   "location": "Rome"
+ }
+]
