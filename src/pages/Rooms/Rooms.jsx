@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom"; 
+import { useEffect, useState } from "react"; 
 import CardView from "../../components/CardView/CardView";
 import TableView from "../../components/TableView/TableView";
 
