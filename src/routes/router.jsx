@@ -15,17 +15,35 @@ import NotFound from "../pages/NotFound/NotFound";
 import RoomBookingForm from "../pages/Bookings/RoomBookingForm";
 import Dashboard from "../pages/Dashboard/Dashboard";
 
-// Define Routes
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/rooms", element: <Rooms /> },
-      { path: "/rooms/:id", element: <RoomDetails /> },
-      { path: "/my-bookings", element: <PrivateRoute element={<MyBookings />} /> },
-      { path: "/RoomBookingForm/:id", element: <RoomBookingForm /> },
+      {
+        path: "/rooms",
+        element: <Rooms />,
+        loader: async () => {
+          try {
+            const response = await fetch(`http://localhost:8000/rooms`);
+            if (!response.ok) throw new Error("Failed to fetch rooms");
+            return response.json();
+          } catch (error) {
+            console.error("Error fetching rooms:", error);
+            throw error;
+          }
+        }, 
+      },
+      { path: "/rooms/:id",
+        element: <RoomDetails /> 
+      },
+      { path: "/my-bookings", 
+        element: <PrivateRoute><MyBookings /></PrivateRoute> 
+      },
+      { path: "/RoomBookingForm/:id", 
+        element: <RoomBookingForm /> 
+      },
     ],
   },
   {
@@ -38,7 +56,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute element={<Dashboard />} />,
+    element: <PrivateRoute><Dashboard /></PrivateRoute>,
   },
   {
     path: "*",
