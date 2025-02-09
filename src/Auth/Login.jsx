@@ -40,7 +40,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 via-white to-blue-50">
+    <div
+      className="w-screen h-screen bg-cover bg-center flex items-center justify-center"
+      style={{
+        backgroundImage: `url('https://i.ibb.co.com/0yTL6rcf/19.jpg')`,
+      }}
+    >
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg border border-gray-200">
         <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
           Welcome Back!

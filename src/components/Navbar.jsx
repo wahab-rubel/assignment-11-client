@@ -61,13 +61,21 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            /* Login Button */
-            <NavLink
-              to="/auth/login"
-              className="bg-green-500 px-3 py-1 rounded hover:bg-green-600"
-            >
-              Login
-            </NavLink>
+            /* Login and Register Links */
+            <div className="flex items-center space-x-2">
+              <NavLink
+                to="/auth/login"
+                className="bg-green-500 px-3 py-1 rounded hover:bg-green-600"
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/auth/register"
+                className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600"
+              >
+                Register
+              </NavLink>
+            </div>
           )}
         </div>
       </div>
