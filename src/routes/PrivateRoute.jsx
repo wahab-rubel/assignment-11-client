@@ -10,9 +10,9 @@ const PrivateRoute = ({ element }) => {
   // Verify the token
   const isTokenValid = (token) => {
     try {
-      const decoded = decodeJwt(token);  // Decode JWT using the jose library
+      const decoded = decodeJwt(token);  
       const currentTime = Date.now() / 1000;
-      return decoded.exp > currentTime;  // Check if token is expired
+      return decoded.exp > currentTime;  
     } catch (err) {
       console.error("Invalid or expired token", err);
       return false;
@@ -20,11 +20,9 @@ const PrivateRoute = ({ element }) => {
   };
 
   if (!user || !token || !isTokenValid(token)) {
-    // Redirect to the login page if the user is not authenticated or token is invalid
     return <Navigate to="/auth/login" />;
   }
 
-  // If the user is authenticated, return the element (protected component)
   return element;
 };
 

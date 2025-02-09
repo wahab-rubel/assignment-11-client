@@ -43,7 +43,7 @@ const Login = () => {
     <div
       className="w-screen h-screen bg-cover bg-center flex items-center justify-center"
       style={{
-        backgroundImage: `url('https://i.ibb.co.com/0yTL6rcf/19.jpg')`,
+        backgroundImage: `url('https://i.ibb.co/9pQqhKV/2.jpg')`,
       }}
     >
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg border border-gray-200">
