@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import WhyChooseUs from "../pages/WhyChooseUs/WhyChooseUs";
 
 const FeaturedRooms = () => {
@@ -89,12 +89,17 @@ const FeaturedRooms = () => {
                   ))}
                 </ul>
                 {/* Book Now Button */}
-                <Link
+                <div className="flex gap-3">
+                <NavLink
                   to={`/RoomBookingForm/${room.id}`}
-                  className="inline-block bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition"
+                  className="py-2 px-4 w-full text-center bg-orange-800 text-white rounded-lg font-medium hover:bg-purple-900 transition"
                 >
                   Book Now
-                </Link>
+                </NavLink>
+                <NavLink to={`/RoomDetails/${room._id}`} className="py-2 px-4 w-full text-center bg-orange-800 text-white rounded-lg font-medium hover:bg-purple-900 transition">
+                Rooms Details
+              </NavLink>
+                </div>
               </div>
             </div>
           ))}
