@@ -24,25 +24,23 @@ const router = createBrowserRouter([
       {
         path: "/rooms",
         element: <Rooms />,
-        loader: async () => {
-          try {
-            const response = await fetch(`http://localhost:8000/rooms`);
-            if (!response.ok) throw new Error("Failed to fetch rooms");
-            return response.json();
-          } catch (error) {
-            console.error("Error fetching rooms:", error);
-            throw error;
-          }
-        }, 
+        loader: () => fetch(`http://localhost:8000/rooms`), 
       },
-      { path: "/rooms/:id",
-        element: <RoomDetails /> 
+      {
+        path: "/RoomDetails/:id", 
+        element: <RoomDetails />,
       },
-      { path: "/my-bookings", 
-        element: <PrivateRoute><MyBookings /></PrivateRoute> 
+      {
+        path: "/RoomBookingForm/:id", 
+        element: <RoomBookingForm />,
       },
-      { path: "/RoomBookingForm/:id", 
-        element: <RoomBookingForm /> 
+      {
+        path: "/my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -56,11 +54,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><Dashboard /></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: <NotFound />, 
   },
 ]);
 

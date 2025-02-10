@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 import CardView from "../../components/CardView/CardView";
 import TableView from "../../components/TableView/TableView";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
-  const [viewMode, setViewMode] = useState("card"); // 'card' or 'table'
+  const [viewMode, setViewMode] = useState("card"); 
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -23,7 +23,7 @@ const Rooms = () => {
   }, []);
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto text-center">
       <h1 className="text-3xl font-bold text-center mb-6">Available Rooms</h1>
 
       {/* Toggle Button for View Mode */}

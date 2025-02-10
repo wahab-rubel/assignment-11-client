@@ -1,77 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import DatePicker from 'react-datepicker'; 
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 
-const RoomDetails = ({ roomId }) => {
+const RoomDetails = () => {
+  const { id } = useParams();
   const [room, setRoom] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  const [showBookingModal, setShowBookingModal] = useState(false);
-  const [bookingDate, setBookingDate] = useState(new Date());
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch room details and reviews
-    axios.get(`/api/rooms/${roomId}`)
-      .then(response => {
-        setRoom(response.data.room);
-        setReviews(response.data.reviews);
-      })
-      .catch(error => console.error(error));
-  }, [roomId]);
+    const fetchRoomDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/rooms/${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch room details");
+        }
+        const data = await response.json();
+        setRoom(data); // Set the room data
+      } catch (err) {
+        console.error("Error fetching room details:", err);
+        setError(
+          err.message || "Unable to load room details. Please try again later."
+        );
+      }
+    };
+    fetchRoomDetails();
+  }, [id]);
 
-  const handleBookNow = () => {
-    setShowBookingModal(true);
-  };
+  if (error) {
+    return <div className="text-red-500 text-center mt-4">{error}</div>; // Display error message
+  }
 
-  const handleConfirmBooking = () => {
-    axios.post(`/api/rooms/${roomId}/book`, { userId: 'currentUserId', bookingDate })
-      .then(response => {
-        alert(response.data.message);
-        setShowBookingModal(false);
-        // Update room availability
-        setRoom({ ...room, isAvailable: false });
-      })
-      .catch(error => console.error(error));
-  };
-
-  if (!room) return <div>Loading...</div>;
+  if (!room) {
+    return <div className="text-center mt-4">Loading...</div>; // Show loading message
+  }
 
   return (
-    <div>
-      <h1>{room.name}</h1>
-      <p>{room.description}</p>
-      <p>Price: ${room.price} per night</p>
-      <p>Capacity: {room.capacity} guests</p>
-      <img src={room.images[0]} alt={room.name} />
-
-      <h2>Reviews</h2>
-      {reviews.length > 0 ? (
-        reviews.map(review => (
-          <div key={review._id}>
-            <p>Rating: {review.rating}/5</p>
-            <p>{review.comment}</p>
-            <p>By User on {new Date(review.createdAt).toLocaleDateString()}</p>
-          </div>
-        ))
-      ) : (
-        <p>No reviews yet. Be the first to review!</p>
-      )}
-
-      <button onClick={handleBookNow} disabled={!room.isAvailable}>
-        {room.isAvailable ? 'Book Now' : 'Unavailable'}
-      </button>
-
-      {showBookingModal && (
-        <div className="modal">
-          <h2>Confirm Booking</h2>
-          <p>Room: {room.name}</p>
-          <p>Price: ${room.price}</p>
-          <p>Description: {room.description}</p>
-          <DatePicker selected={bookingDate} onChange={date => setBookingDate(date)} />
-          <button onClick={handleConfirmBooking}>Confirm</button>
-          <button onClick={() => setShowBookingModal(false)}>Cancel</button>
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-4xl font-extrabold text-center mb-6">{room.name}</h1>
+      <div className="flex justify-center items-center gap-8">
+        <div className="relative w-full max-w-3xl">
+          <img
+            src={room.image}
+            alt={room.name}
+            className="w-full h-96 object-cover rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105"
+          />
         </div>
-      )}
+        <div className="max-w-lg space-y-4">
+          <p className="text-xl text-gray-700">{room.description}</p>
+          <p className="text-lg font-bold text-gray-900">${room.price}/night</p>
+          <p className="text-lg text-gray-600">{room.location}</p>
+          <div className="flex items-center">
+            <span className="text-yellow-500 text-xl mr-2">{room.rating}</span>
+            <span className="text-gray-500">{room.totalReviews} reviews</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center mt-6">
+        <NavLink
+          to={`/RoomBookingForm/${room._id}`}
+          className="bg-blue-600 text-white py-3 px-6 rounded-lg text-xl hover:bg-blue-700 transition duration-200"
+        >
+          Book Now
+        </NavLink>
+      </div>
     </div>
   );
 };

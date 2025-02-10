@@ -41,6 +41,16 @@ const Navbar = () => {
               >
                 My Bookings
               </NavLink>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-yellow-400 font-semibold"
+                    : "hover:text-gray-200"
+                }
+              >
+                DashBoard
+              </NavLink>
               {/* User Profile */}
               {user.photoURL && (
                 <img
