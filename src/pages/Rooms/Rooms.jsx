@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import CardView from "../../components/CardView/CardView";
 import TableView from "../../components/TableView/TableView";

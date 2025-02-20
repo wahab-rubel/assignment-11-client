@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
-const MyBookings = () => {
+const RoomBooking = ({ checkIn, checkOut }) => {
   const [bookings, setBookings] = useState([]);
   const token = localStorage.getItem("jwt_token");
 
@@ -11,7 +12,6 @@ const MyBookings = () => {
       return;
     }
 
-    // Try to fetch bookings from the API
     const fetchBookings = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/my-bookings", {
@@ -22,8 +22,7 @@ const MyBookings = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Bookings Data:", data);
-          setBookings(data); // Set fetched bookings
+          setBookings(data);
         } else {
           toast.error("Failed to fetch bookings. Please try again.");
         }
@@ -33,38 +32,58 @@ const MyBookings = () => {
       }
     };
 
-    // Call the function to fetch bookings
     fetchBookings();
+  }, [token]);
 
-    // Try fetching from localStorage if API fetch fails
-    const storedBookings = JSON.parse(localStorage.getItem("myBookings"));
-    if (storedBookings) {
-      setBookings(storedBookings);
-    } else if (bookings.length === 0) {
-      toast.info("You have no bookings yet.");
+  const handleBooking = async () => {
+    if (!checkIn || !checkOut) {
+      toast.error("Please select check-in and check-out dates.");
+      return;
     }
-  }, [token, bookings]); // Dependency array
+
+    const bookingDetails = {
+      checkInDate: checkIn.toISOString().split("T")[0],
+      checkOutDate: checkOut.toISOString().split("T")[0],
+      roomType: "Deluxe Room",
+    };
+
+    try {
+      const response = await fetch("http://localhost:8000/api/book-room", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(bookingDetails),
+      });
+
+      if (response.ok) {
+        const newBooking = await response.json();
+        setBookings([...bookings, newBooking]);
+        toast.success(
+          `Room booked from ${checkIn.toDateString()} to ${checkOut.toDateString()}`
+        );
+      } else {
+        toast.error("Failed to book room. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error booking room:", error);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
 
   return (
-    <div>
-      <h1>My Bookings</h1>
-      {bookings.length === 0 ? (
-        <p>You have no bookings yet.</p>
-      ) : (
-        <ul>
-          {bookings.map((booking, index) => (
-            <li key={index}>
-              <p>Room Type: {booking.roomType}</p>
-              <p>Check-in: {booking.checkInDate}</p>
-              <p>Check-out: {booking.checkOutDate}</p>
-              {/* Add more details here */}
-              <pre>{JSON.stringify(booking, null, 2)}</pre>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="mt-4 p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-xl font-semibold mb-4">Confirm Your Booking</h2>
+
+      <button
+        onClick={handleBooking}
+        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+      >
+        Book Now
+      </button>
     </div>
   );
 };
 
-export default MyBookings;
+export default RoomBooking;

@@ -24,16 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/rooms",
         element: <Rooms />,
-        loader: () => fetch(`http://localhost:8000/rooms`), 
+        loader: async () => fetch("http://localhost:8000/rooms"),
       },
-      {
-        path: "/RoomDetails/:id", 
-        element: <RoomDetails />,
-      },
-      {
-        path: "/RoomBookingForm/:id", 
-        element: <RoomBookingForm />,
-      },
+      { path: "/RoomDetails/:id", element: <RoomDetails /> },
+      { path: "/RoomBookingForm/:id", element: <RoomBookingForm /> },
       {
         path: "/my-bookings",
         element: (
@@ -60,10 +54,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
-  {
-    path: "*",
-    element: <NotFound />, 
-  },
+  { path: "*", element: <NotFound /> },
 ]);
 
 export default router;

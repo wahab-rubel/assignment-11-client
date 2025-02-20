@@ -1,48 +1,32 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
+import React from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import app from "../firebase/firebase.init";
 
-
-const AuthContext = createContext();
+// ✅ Context 
+const AuthContext = createContext(null);
 const auth = getAuth(app);
 
-export const useAuthContext = () => useContext(AuthContext);
+// ✅ Custom Hook 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 
+// ✅ AuthProvider Component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Store JWT token to localStorage
-  const storeToken = (token) => {
-    localStorage.setItem("jwt_token", token);
-  };
-
-  // Remove JWT token from localStorage
-  const removeToken = () => {
-    localStorage.removeItem("jwt_token");
-  };
-
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const token = jwt.sign({ uid: userCredential.user.uid }, process.env.REACT_APP_SECRET_KEY, { expiresIn: "1h" });
-        storeToken(token);
-      });
-  };
-
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider)
-      .then((userCredential) => {
-        const token = jwt.sign({ uid: userCredential.user.uid }, process.env.REACT_APP_SECRET_KEY, { expiresIn: "1h" });
-        storeToken(token);
-      });
-  };
-
-  const logout = () => {
-    signOut(auth);
-    removeToken();
-  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -52,9 +36,52 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // ✅ Email & Password Login 
+  const login = async (email, password) => {
+    setLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user);
+    } catch (error) {
+      console.error("Login Error:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Google Sign-in 
+  const googleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    setLoading(true);
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      setUser(userCredential.user);
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Logout Function
+  const logout = async () => {
+    setLoading(true);
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error("Logout Error:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Provide Context
+  const authInfo = { user, loading, login, googleSignIn, logout };
+
   return (
-    <AuthContext.Provider value={{ user, login, googleSignIn, logout }}>
-      {!loading && children}
+    <AuthContext.Provider value={authInfo}>
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -10,7 +10,7 @@ const FeaturedRooms = () => {
       name: "Deluxe Room",
       description:
         "A luxurious room with stunning views and premium amenities.",
-      image: "https://i.ibb.co.com/9pQqhKV/2.jpg",
+      image: "https://res.cloudinary.com/df87kkhft/image/upload/v1739976148/1_g99jqe.jpg",
       price: "$120/night",
       features: ["Free WiFi", "Air Conditioning", "King Bed"],
     },
@@ -18,7 +18,7 @@ const FeaturedRooms = () => {
       id: 2,
       name: "Family Suite",
       description: "Spacious suite perfect for families with modern comforts.",
-      image: "https://i.ibb.co.com/vhrZGv9/1.jpg",
+      image: "https://i.postimg.cc/2SLc3m9q/1.jpg",
       price: "$180/night",
       features: ["2 Queen Beds", "Mini Kitchen", "Balcony"],
     },

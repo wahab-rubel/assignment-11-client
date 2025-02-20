@@ -1,9 +1,12 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext";
 import { ToastContainer } from "react-toastify";
+import { useAuth } from "../contexts/AuthContext";
+
+
 
 const Navbar = () => {
-  const { user, logout } = useAuthContext();
+  const { user, logout } = useAuth();
 
   return (
     <nav className="bg-orange-500 text-white px-6 py-4 shadow-md sticky top-0 z-10">
