@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext"; // ✅ useAuth import 
+import { useAuthContext } from "../contexts/AuthContext";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user, googleSignIn } = useAuth(); // ✅ useAuthContext 
+  const { user, googleSignIn } = useAuthContext(); // ✅ useAuthContext 
 
   const navigate = useNavigate();
 
   // Custom login function
   const login = async (email, password) => {
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch("https://assignment-11-server-green-nine.vercel.app/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -28,18 +29,31 @@ const Login = () => {
     }
   };
 
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
+    
     try {
-      await login(email, password);
+        const response = await fetch('https://assignment-11-server-green-nine.vercel.app/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (data.token) {
+            localStorage.setItem('jwt_token', data.token);
+            toast.success('Login successful!');
+        } else {
+            toast.error('Invalid credentials!');
+        }
     } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+        console.error('Login Error:', error);
+        toast.error('Something went wrong!');
     }
-  };
+};
+
 
   const handleGoogleLogin = async () => {
     setLoading(true);

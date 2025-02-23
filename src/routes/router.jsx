@@ -13,7 +13,7 @@ import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import NotFound from "../pages/NotFound/NotFound";
 import RoomBookingForm from "../pages/Bookings/RoomBookingForm";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import Profile from "../components/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       {
         path: "/rooms",
         element: <Rooms />,
-        loader: async () => fetch("http://localhost:8000/rooms"),
+        loader: async () => fetch("https://assignment-11-server-green-nine.vercel.app/rooms"),
       },
       { path: "/RoomDetails/:id", element: <RoomDetails /> },
       { path: "/RoomBookingForm/:id", element: <RoomBookingForm /> },
@@ -47,10 +47,10 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "/Profile",
     element: (
       <PrivateRoute>
-        <Dashboard />
+        <Profile></Profile>
       </PrivateRoute>
     ),
   },

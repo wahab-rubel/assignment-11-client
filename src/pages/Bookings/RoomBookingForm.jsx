@@ -16,6 +16,12 @@ const RoomBookingForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000 < Date.now();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,15 +38,16 @@ const RoomBookingForm = () => {
       return;
     }
 
-    // Check if the user is authenticated
+    // Check authentication
     const token = localStorage.getItem('jwt_token');
-    if (!token) {
-      toast.error('User is not authenticated. Please log in.');
+    if (!token || isTokenExpired(token)) {
+      localStorage.removeItem('jwt_token');
+      toast.error('Session expired. Please log in again.');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/book-room', {
+      const response = await fetch('https://assignment-11-server-green-nine.vercel.app/api/book-room', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -51,7 +58,7 @@ const RoomBookingForm = () => {
 
       if (response.ok) {
         toast.success('Room booked successfully!');
-
+        
         // Save the new booking to localStorage
         const newBooking = { ...formData, bookingId: new Date().getTime() }; // Add a unique bookingId for easy identification
         const existingBookings = JSON.parse(localStorage.getItem('myBookings')) || [];

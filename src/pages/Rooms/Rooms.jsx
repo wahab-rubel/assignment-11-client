@@ -10,7 +10,7 @@ const Rooms = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch("http://localhost:8000/rooms");
+        const response = await fetch("https://assignment-11-server-green-nine.vercel.app/rooms");
         if (!response.ok) {
           throw new Error("Failed to fetch rooms");
         }

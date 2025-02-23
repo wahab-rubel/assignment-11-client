@@ -1,5 +1,4 @@
-import React from "react";
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -10,15 +9,15 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.init";
 
-// ✅ Context 
+// ✅ Context Creation
 const AuthContext = createContext(null);
 const auth = getAuth(app);
 
-// ✅ Custom Hook 
-export const useAuth = () => {
+// ✅ Custom Hook
+export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuthContext must be used within an AuthProvider");
   }
   return context;
 };
@@ -33,10 +32,11 @@ export const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
-  // ✅ Email & Password Login 
+  // ✅ Email & Password Login
   const login = async (email, password) => {
     setLoading(true);
     try {
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Google Sign-in 
+  // ✅ Google Sign-in
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     setLoading(true);
@@ -76,12 +76,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Provide Context
+  // ✅ Providing Context Values
   const authInfo = { user, loading, login, googleSignIn, logout };
 
   return (
     <AuthContext.Provider value={authInfo}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

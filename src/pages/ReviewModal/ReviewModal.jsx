@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ReactStars from "react-rating-stars-component";
 
-const ReviewModal = ({ roomId, username, userId, onClose }) => {
+const ReviewModal = ({ roomId, userId, username, onClose }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [timestamp, setTimestamp] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!rating || !comment) {
       toast.error("All fields are required!");
       return;
     }
 
+    const currentTimestamp = new Date().toLocaleString();
+    setTimestamp(currentTimestamp);
+
     try {
-      const response = await axios.post("/api/reviews", {
+      await axios.post("/api/reviews", {
         roomId,
         userId,
         username,
         rating,
         comment,
+        timestamp: currentTimestamp,
       });
       toast.success("Review submitted successfully!");
       onClose(); // Close the modal
@@ -34,13 +41,17 @@ const ReviewModal = ({ roomId, username, userId, onClose }) => {
         <h2>Write a Review</h2>
         <form onSubmit={handleSubmit}>
           <label>
+            Username:
+            <input type="text" value={username} readOnly />
+          </label>
+          <label>
             Rating (1-5):
-            <input
-              type="number"
-              min="1"
-              max="5"
+            <ReactStars
+              count={5}
               value={rating}
-              onChange={(e) => setRating(e.target.value)}
+              onChange={(newRating) => setRating(newRating)}
+              size={24}
+              isHalf={false}
             />
           </label>
           <label>
@@ -51,7 +62,9 @@ const ReviewModal = ({ roomId, username, userId, onClose }) => {
             ></textarea>
           </label>
           <button type="submit">Submit</button>
-          <button onClick={onClose}>Cancel</button>
+          <button type="button" onClick={onClose}>
+            Cancel
+          </button>
         </form>
       </div>
     </div>

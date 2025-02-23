@@ -4,6 +4,7 @@ import Map from '../../components/Map';
 import FeaturedRooms from '../../components/FeaturedRooms';
 import SpecialOffers from '../../pages/SpecialOffers/SpecialOffers'
 
+
 const Home = () => {
  return (
   <div>

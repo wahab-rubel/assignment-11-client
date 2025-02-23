@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import MapComponent from "../../components/MapComponent/MapComponent"; 
+import MapComponent from "../../components/MapComponent/MapComponent";
 
 const RoomDetails = () => {
   const { id } = useParams();
@@ -12,19 +12,18 @@ const RoomDetails = () => {
   useEffect(() => {
     const fetchRoomDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/rooms/${id}`);
+        const response = await fetch(`https://assignment-11-server-green-nine.vercel.app/rooms/${id}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch room details");
+          throw new Error(`Failed to fetch room details: ${response.statusText}`);
         }
         const data = await response.json();
         setRoom(data);
       } catch (err) {
         console.error("Error fetching room details:", err);
-        setError(
-          err.message || "Unable to load room details. Please try again later."
-        );
+        setError(err.message || "Unable to load room details. Please try again later.");
       }
     };
+    
     fetchRoomDetails();
   }, [id]);
 
@@ -33,20 +32,27 @@ const RoomDetails = () => {
   }
 
   if (!room) {
-    return <div className="text-center mt-4">Loading...</div>;
+    return (
+      <div className="text-center mt-4">
+        <div className="spinner">Loading...</div>
+      </div>
+    );
   }
 
   return (
     <div className="container mx-auto py-8 px-4">
       {/* Helmet for dynamic title and meta tags */}
       <Helmet>
-        <title>{room.name} - Hotel Booking</title>
-        <meta name="description" content={room.description} />
+        <title>{room ? `${room.name} - Hotel Booking` : "Loading..."}</title>
+        <meta
+          name="description"
+          content={room ? room.description : "Loading..."}
+        />
       </Helmet>
 
       {/* Animated Heading */}
       <motion.h1
-        className="text-4xl font-extrabold text-center mb-6"
+        className="text-4xl font-extrabold text-center mb-6 text-blue-700"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -57,7 +63,7 @@ const RoomDetails = () => {
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
         {/* Room Image with Animation */}
         <motion.div
-          className="relative w-full max-w-3xl"
+          className="relative w-full max-w-3xl rounded-xl overflow-hidden shadow-xl"
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -71,17 +77,17 @@ const RoomDetails = () => {
 
         {/* Room Details */}
         <motion.div
-          className="max-w-lg space-y-4"
+          className="max-w-lg space-y-6 bg-white shadow-xl rounded-lg p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xl text-gray-700">{room.description}</p>
-          <p className="text-lg font-bold text-gray-900">${room.price}/night</p>
-          <p className="text-lg text-gray-600">{room.location}</p>
+          <p className="text-xl text-gray-800">{room.description}</p>
+          <p className="text-2xl font-semibold text-gray-900">${room.price}/night</p>
+          <p className="text-lg text-gray-700">{room.location}</p>
           <div className="flex items-center">
             <span className="text-yellow-500 text-xl mr-2">{room.rating}</span>
-            <span className="text-gray-500">{room.totalReviews} reviews</span>
+            <span className="text-gray-600">{room.totalReviews} reviews</span>
           </div>
         </motion.div>
       </div>
