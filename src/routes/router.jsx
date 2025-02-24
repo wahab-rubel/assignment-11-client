@@ -14,6 +14,7 @@ import Register from "../Auth/Register";
 import NotFound from "../pages/NotFound/NotFound";
 import RoomBookingForm from "../pages/Bookings/RoomBookingForm";
 import Profile from "../components/Profile/Profile";
+import { Dashboard } from "@mui/icons-material";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
     ],
+  },
+  {
+    path: "/Dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
   },
   {
     path: "/Profile",

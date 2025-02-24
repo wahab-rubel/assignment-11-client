@@ -58,6 +58,16 @@ const Navbar = () => {
               </NavLink>
               
               <NavLink
+                to="/Dashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-yellow-400 font-semibold"
+                    : "hover:text-gray-200"
+                }
+              >
+                Dashboard
+              </NavLink>
+              <NavLink
                 to="/Profile"
                 className={({ isActive }) =>
                   isActive
